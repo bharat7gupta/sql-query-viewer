@@ -1,8 +1,8 @@
 import TabsContainer, { Tab } from './components/common/TabsContainer/TabsContainer';
 import QueryWindow from './components/QueryWindow/QueryWindow';
+import TabPanel from './components/common/TabPanel/TabPanel';
 
 import './App.css';
-import TabPanel from './components/common/TabPanel/TabPanel';
 
 export interface QueryTab extends Tab {
   dataSource: string;

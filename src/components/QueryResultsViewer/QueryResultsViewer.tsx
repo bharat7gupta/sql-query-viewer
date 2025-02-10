@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from 'react';
 import { DataRow, DataRowValue } from '../../types/results-data';
 
 import './QueryResultsViewer.css';
@@ -23,23 +23,29 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
         return null;
     }
 
-    const renderCellData = (cellData: DataRowValue) => {
+    const renderCellData = (cellData: DataRowValue): ReactNode => {
         if (cellData === null || cellData === undefined) {
             return cellData;
         }
         else if (Array.isArray(cellData)) {
-            return cellData.join(', ');
+            return cellData.map(data => renderCellData(data));
         }
         else if (typeof cellData === 'object') {
-            return <span className='large-data-cell'>{JSON.stringify(cellData)}</span>;
+            return <div className='large-data-cell'>{JSON.stringify(cellData)}</div>;
+        }
+        else if (typeof cellData === 'boolean') {
+            return `${cellData}`;
         }
         else {
+            // for string and number
+            // displaying dates as it is. since in the absence of a schema
+            // we would never know if we need to trim down the time part or not
             return cellData;
         }
     }
 
     const gridStyles = { 
-        gridTemplateColumns: `repeat(${colHeaders.length}, minmax(80px, auto))`
+        gridTemplateColumns: `repeat(${colHeaders.length}, minmax(auto, 300px))`
     };
 
     return (
