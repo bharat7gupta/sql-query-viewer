@@ -1,0 +1,28 @@
+.query-editor-field {
+    display: block;
+    width: 100%;
+    font-size: 1.1rem;
+    resize: none;
+    border: 2px solid #d5d5d5;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 8px;
+}
+
+.query-editor-field:focus {
+    outline: none;
+}
+
+.query-run {
+    display: block;
+    margin: 20px 0 20px auto;
+    color: white;
+    background-color: #2bbf56;
+    border: none;
+    outline: none;
+    width: 180px;
+}
+
+.query-run:hover, .query-run:focus {
+    outline: 2px solid #2bbf56;
+}
