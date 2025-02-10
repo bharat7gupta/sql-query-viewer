@@ -1,8 +1,8 @@
 .query-data {
     display: grid;
     border: 1px solid #efefef;
-    grid-template-columns: repeat(5, minmax(80px, auto));
     cursor: pointer;
+    overflow: hidden;
 }
 
 .col-headers,
@@ -15,11 +15,18 @@
     font-weight: bold;
 }
 
+.col-header {
+    padding: 12px;
+}
+
+.data-cell {
+    padding: 4px;
+}
+
 .col-header,
 .data-cell {
     background-color: #ffffff;
     border: 1px solid #efefef;
-    padding: 4px;
 }
 
 .col-header:hover,

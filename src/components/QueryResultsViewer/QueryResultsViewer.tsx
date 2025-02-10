@@ -20,7 +20,7 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
     }, [data]);
 
     if (!data || data.length === 0) {
-        return <i>No Data</i>
+        return null;
     }
 
     const renderCellData = (cellData: DataRowValue) => {
@@ -38,8 +38,12 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
         }
     }
 
+    const gridStyles = { 
+        gridTemplateColumns: `repeat(${colHeaders.length}, minmax(80px, auto))`
+    };
+
     return (
-        <div className='query-data'>
+        <div className='query-data' style={gridStyles}>
             <div className='col-headers'>
                 {colHeaders.map(header => (
                     <div className='col-header' key={header}>{header}</div>
