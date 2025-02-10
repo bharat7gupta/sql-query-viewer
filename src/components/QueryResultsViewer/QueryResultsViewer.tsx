@@ -45,12 +45,13 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
     }
 
     const gridStyles = { 
-        gridTemplateColumns: `repeat(${colHeaders.length}, minmax(auto, 300px))`
+        gridTemplateColumns: `auto repeat(${colHeaders.length}, minmax(auto, 300px))`
     };
 
     return (
         <div className='query-data' style={gridStyles}>
             <div className='col-headers'>
+                <div className='col-header'></div>
                 {colHeaders.map(header => (
                     <div className='col-header' key={header}>{header}</div>
                 ))}
@@ -58,6 +59,7 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
             <div className='data-container'>
                 {data.map((row: DataRow, rowIndex: number) => (
                     <div key={rowIndex} className='data-row'>
+                        <div key={rowIndex} className='data-cell row-number'>{rowIndex + 1}</div>
                         {colHeaders.map(colName => (
                             <div key={colName} className='data-cell'>
                                 {renderCellData(row[colName])}
