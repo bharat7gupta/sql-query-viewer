@@ -24,7 +24,7 @@ export default function QueryEditor({ onRun }: QueryEditorProps) {
     };
 
     return (
-        <div>
+        <>
             <textarea
                 rows={8}
                 className='query-editor-field'
@@ -43,6 +43,6 @@ export default function QueryEditor({ onRun }: QueryEditorProps) {
                     Run
                 </button>
             </div>
-        </div>
+        </>
     )
 }

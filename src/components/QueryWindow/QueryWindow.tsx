@@ -20,9 +20,9 @@ export default function QueryWindow({ dataSource }: QueryWindowProps) {
     };
 
     return (
-        <div>
+        <>
             <QueryEditor onRun={handleQueryRun} />
             <QueryResultsViewer data={data} />
-        </div>
+        </>
     )
 }

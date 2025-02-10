@@ -28,7 +28,7 @@ function App() {
   ];
 
   return (
-    <div>
+    <div className='app-container'>
       <h2 className='app-header'>SQL Query Viewer</h2>
       <TabsContainer tabs={queryTabs}>
         {queryTabs.map(tab => (

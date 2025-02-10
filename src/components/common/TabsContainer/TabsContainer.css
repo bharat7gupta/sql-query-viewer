@@ -22,3 +22,7 @@
 .tab-hide {
     display: none;
 }
+
+.tab-show {
+    display: contents;
+}

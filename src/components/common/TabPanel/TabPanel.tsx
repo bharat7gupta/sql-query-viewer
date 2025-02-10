@@ -8,11 +8,10 @@ interface TabPanelProps {
 
 export default function TabPanel({ value, children }: TabPanelProps) {
     const selectedTabValue = useContext(TabsContext);
-    let className;
 
-    if (selectedTabValue !== value) {
-        className = 'tab-hide';
-    }
-
-    return <div className={className}>{children}</div>;
+    return (
+        <div className={selectedTabValue === value ? 'tab-show' : 'tab-hide'}>
+            {children}
+        </div>
+    );
 }
