@@ -32,7 +32,6 @@ export default function TabsContainer({ tabs, children, onActive }: TabsContaine
                         key={tab.id}
                         className={`tab ${tab.id === selectedTabValue ? 'active' : ''}`}
                         onClick={() => handleTabHeaderClick(tab)}
-                        aria-selected={tab.id === selectedTabValue}
                     >
                         {tab.name}
                     </nav>
