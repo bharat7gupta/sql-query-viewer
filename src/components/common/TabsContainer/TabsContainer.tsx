@@ -26,12 +26,13 @@ export default function TabsContainer({ tabs, children, onActive }: TabsContaine
 
     return (
         <TabsContext.Provider value={selectedTabValue}>
-            <div className="tabs">
+            <div className="tabs" role="tablist" aria-label="Query tabs">
                 {tabs.map(tab => (
                     <nav
                         key={tab.id}
                         className={`tab ${tab.id === selectedTabValue ? 'active' : ''}`}
                         onClick={() => handleTabHeaderClick(tab)}
+                        aria-selected={tab.id === selectedTabValue}
                     >
                         {tab.name}
                     </nav>

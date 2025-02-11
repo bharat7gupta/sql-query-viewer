@@ -51,10 +51,14 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
             return cellData;
         }
         else if (Array.isArray(cellData)) {
-            return cellData.map(data => renderCellData(data));
+            if (typeof cellData[0] === 'object') {
+                return JSON.stringify(cellData);
+            } else {
+                return cellData.join(', ');
+            }
         }
         else if (typeof cellData === 'object') {
-            return <div className='large-data-cell'>{JSON.stringify(cellData)}</div>;
+            return JSON.stringify(cellData);
         }
         else if (typeof cellData === 'boolean') {
             return `${cellData}`;
@@ -75,9 +79,9 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
     };
 
     return (
-        <div className='query-data' ref={parentRef}>
+        <div className='query-results' ref={parentRef} role='table' aria-label='Query Results'>
             <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
-                <div className='col-headers'>
+                <div className='col-headers' role='header'>
                     <div className='row-number' style={rowNumberStyles}></div>
                     {colHeaders.map(header => (
                         <div key={header} className='col-header'>{header}</div>

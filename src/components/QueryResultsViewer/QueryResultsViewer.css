@@ -1,4 +1,4 @@
-.query-data {
+.query-results {
     border: 1px solid #efefef;
     cursor: pointer;
     overflow: auto;
@@ -45,12 +45,6 @@
 .col-header:hover,
 .data-cell:hover {
     background-color: #f5f5f5;
-}
-
-.large-data-cell {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .row-number {

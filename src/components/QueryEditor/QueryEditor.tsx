@@ -34,6 +34,8 @@ export default function QueryEditor({ onRun, inputRef }: QueryEditorProps) {
                 value={query}
                 onChange={handleQueryChange}
                 onKeyDown={handleKeyDown}
+                aria-label="SQL Query Input"
+                aria-describedby="SQL query editor for user to enter SQL queries"
                 autoFocus
             />
             <div className='actions'>
@@ -42,6 +44,8 @@ export default function QueryEditor({ onRun, inputRef }: QueryEditorProps) {
                     onClick={onRun}
                     className='query-run'
                     disabled={runDisabled}
+                    aria-label="Run SQL Query"
+                    aria-disabled={runDisabled}
                 >
                     Run
                 </button>
