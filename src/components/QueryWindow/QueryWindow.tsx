@@ -4,6 +4,7 @@ import QueryResultsViewer from '../QueryResultsViewer/QueryResultsViewer';
 import { DataRow } from '../../types/results-data';
 
 import { fetchQueryData } from '../../services/query-service';
+import StatusBar from './StatusBar';
 
 interface QueryWindowProps {
     dataEntity: string;
@@ -24,7 +25,10 @@ export default function QueryWindow({ dataEntity, inputRef }: QueryWindowProps) 
                 onRun={handleQueryRun}
                 inputRef={inputRef as unknown as Ref<HTMLTextAreaElement>}
             />
+
             <QueryResultsViewer data={data} />
+
+            {!data || data.length === 0 ? null : <StatusBar rowCount={data.length} />}
         </>
     )
 }

@@ -2,7 +2,7 @@
     border: 1px solid #efefef;
     cursor: pointer;
     overflow: auto;
-    margin-bottom: 48px;
+    margin-bottom: 32px;
 }
 
 .col-headers {
@@ -59,4 +59,10 @@
     padding: 4px 8px;
     position: sticky;
     left: 0;
+}
+
+.status-bar {
+    position: absolute;
+    background-color: yellow;
+    bottom: -48px;
 }

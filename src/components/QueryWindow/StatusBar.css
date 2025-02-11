@@ -1,0 +1,8 @@
+.status-bar {
+    text-align: right;
+    position: relative;
+    background-color: rgb(248, 248, 180);
+    top: -30px;
+    padding: 4px;
+    font-size: 0.75rem;
+}
