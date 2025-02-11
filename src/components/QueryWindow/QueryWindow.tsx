@@ -3,7 +3,6 @@ import QueryEditor from '../QueryEditor/QueryEditor';
 import QueryResultsViewer from '../QueryResultsViewer/QueryResultsViewer';
 import { DataRow } from '../../types/results-data';
 
-import './QueryWindow.css';
 import { fetchQueryData } from '../../services/query-service';
 
 interface QueryWindowProps {

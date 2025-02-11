@@ -1,33 +1,45 @@
 .query-data {
-    display: grid;
     border: 1px solid #efefef;
     cursor: pointer;
     overflow: auto;
     margin-bottom: 48px;
 }
 
-.col-headers,
-.data-container,
-.data-row {
-    display: contents;
-}
-
 .col-headers {
     font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.col-headers,
+.data-row {
+    display: flex;
+}
+
+.data-row {
+    position: absolute;
+    top: 50px;
+    left: 0;
 }
 
 .col-header {
+    flex: 0 0 200px;
+    box-sizing: border-box;
     background-color: #f1f1f1;
     border: 1px solid #e0e0e0;
     padding: 12px;
-    position: sticky;
-    top: 0;
 }
 
 .data-cell {
+    flex: 0 0 200px;
+    box-sizing: border-box;
     background-color: #ffffff;
     border: 1px solid #efefef;
     padding: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .col-header:hover,

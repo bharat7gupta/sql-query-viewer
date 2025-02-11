@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { useVirtualizer } from '@tanstack/react-virtual';
 import { DataRow, DataRowValue } from '../../types/results-data';
 
 import './QueryResultsViewer.css';
@@ -7,8 +8,12 @@ interface QueryResultsViewerProps {
     data: DataRow[];
 }
 
+const ESTIMATED_ROW_HEIGHT = 34; // in pixel
+
 export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
     const [colHeaders, setColHeaders] = useState<string[]>([]);
+    const [rowNumberColWidth, setRowNumberColWidth] = useState<number>(0);
+    const parentRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         if (!data || data.length === 0) {
@@ -18,6 +23,24 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
 
         setColHeaders(Object.keys(data[0]));
     }, [data]);
+
+    useEffect(() => {
+        if (data.length < Math.pow(10, 3)) {
+            setRowNumberColWidth(30);
+        } else if (data.length < Math.pow(10, 6)) {
+            setRowNumberColWidth(60);
+        } else if (data.length < Math.pow(10, 9)) {
+            setRowNumberColWidth(90);
+        } else {
+            setRowNumberColWidth(120);
+        }
+    }, [data.length])
+
+    const virtualizer = useVirtualizer({
+        count: data.length,
+        getScrollElement: () => parentRef.current,
+        estimateSize: () => ESTIMATED_ROW_HEIGHT,
+    });
 
     if (!data || data.length === 0) {
         return null;
@@ -44,25 +67,30 @@ export default function QueryResultsViewer({ data }: QueryResultsViewerProps) {
         }
     }
 
-    const gridStyles = { 
-        gridTemplateColumns: `auto repeat(${colHeaders.length}, minmax(auto, 300px))`
+    const virtualItems = virtualizer.getVirtualItems();
+    const rowNumberStyles = {
+        width: `${rowNumberColWidth}px`,
+        minWidth: `${rowNumberColWidth}px`,
+        maxWidth: `${rowNumberColWidth}px`,
     };
 
     return (
-        <div className='query-data' style={gridStyles}>
-            <div className='col-headers'>
-                <div className='col-header'></div>
-                {colHeaders.map(header => (
-                    <div className='col-header' key={header}>{header}</div>
-                ))}
-            </div>
-            <div className='data-container'>
-                {data.map((row: DataRow, rowIndex: number) => (
-                    <div key={rowIndex} className='data-row'>
-                        <div key={rowIndex} className='data-cell row-number'>{rowIndex + 1}</div>
+        <div className='query-data' ref={parentRef}>
+            <div style={{ height: virtualizer.getTotalSize(), position: 'relative' }}>
+                <div className='col-headers'>
+                    <div className='row-number' style={rowNumberStyles}></div>
+                    {colHeaders.map(header => (
+                        <div key={header} className='col-header'>{header}</div>
+                    ))}
+                </div>
+                {virtualItems.map((virtualRow) => (
+                    <div key={virtualRow.index} className='data-row' style={{ transform: `translateY(${virtualRow?.start}px)` }}>
+                        <div className='row-number' style={rowNumberStyles}>
+                            {virtualRow.index + 1}
+                        </div>
                         {colHeaders.map(colName => (
                             <div key={colName} className='data-cell'>
-                                {renderCellData(row[colName])}
+                                {renderCellData(data[virtualRow.index][colName])}
                             </div>
                         ))}
                     </div>
