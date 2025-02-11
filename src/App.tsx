@@ -1,3 +1,4 @@
+import { Ref, RefObject, useRef } from 'react';
 import TabsContainer, { Tab } from './components/common/TabsContainer/TabsContainer';
 import QueryWindow from './components/QueryWindow/QueryWindow';
 import TabPanel from './components/common/TabPanel/TabPanel';
@@ -5,7 +6,8 @@ import TabPanel from './components/common/TabPanel/TabPanel';
 import './App.css';
 
 export interface QueryTab extends Tab {
-  dataSource: string;
+  dataEntity: string;
+  inputRef?: Ref<HTMLElement>;
 }
 
 function App() {
@@ -13,27 +15,35 @@ function App() {
     {
       id: 'uuid-1',
       name: 'Query Window 1',
-      dataSource: 'customers.json',
+      dataEntity: 'customers',
+      inputRef: useRef<HTMLElement>(null),
     },
     {
       id: 'uuid-2',
       name: 'Query Window 2',
-      dataSource: 'products.json',
+      dataEntity: 'products',
+      inputRef: useRef<HTMLElement>(null),
     },
     {
       id: 'uuid-3',
       name: 'Query Window 3',
-      dataSource: 'orders.json',
+      dataEntity: 'orders',
+      inputRef: useRef<HTMLElement>(null),
     }
   ];
+
+  const onActive = (tab: Tab) => {
+    const focusElement = (tab as QueryTab).inputRef as RefObject<HTMLElement>;
+    focusElement?.current.focus();
+  };
 
   return (
     <div className='app-container'>
       <h2 className='app-header'>SQL Query Viewer</h2>
-      <TabsContainer tabs={queryTabs}>
+      <TabsContainer tabs={queryTabs} onActive={onActive}>
         {queryTabs.map(tab => (
-          <TabPanel value={tab.id}>
-            <QueryWindow dataSource={tab.dataSource} />
+          <TabPanel key={tab.id} value={tab.id}>
+            <QueryWindow inputRef={tab.inputRef} dataEntity={tab.dataEntity} />
           </TabPanel>
         ))}
       </TabsContainer>

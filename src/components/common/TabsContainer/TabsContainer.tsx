@@ -11,13 +11,17 @@ export interface Tab {
 interface TabsContainerProps {
     tabs: Tab[];
     children: ReactNode | ReactNode[];
+    onActive: (tab: Tab) => void;
 }
 
-export default function TabsContainer({ tabs, children }: TabsContainerProps) {
+export default function TabsContainer({ tabs, children, onActive }: TabsContainerProps) {
     const [selectedTabValue, setSelectedTabValue] = useState(tabs[0].id);
 
     const handleTabHeaderClick = (tab: Tab) => {
-        setSelectedTabValue(tab.id);
+        if (selectedTabValue !== tab.id) {
+            setSelectedTabValue(tab.id);
+            setTimeout(() => onActive(tab));
+        }
     };
 
     return (
@@ -25,6 +29,7 @@ export default function TabsContainer({ tabs, children }: TabsContainerProps) {
             <div className="tabs">
                 {tabs.map(tab => (
                     <nav
+                        key={tab.id}
                         className={`tab ${tab.id === selectedTabValue ? 'active' : ''}`}
                         onClick={() => handleTabHeaderClick(tab)}
                     >

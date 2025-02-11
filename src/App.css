@@ -10,6 +10,7 @@
 
 #root {
   max-width: 1280px;
-  min-width: 84%;
+  min-width: 640px;
+  width: 84%;
   margin: 0 auto;
 }

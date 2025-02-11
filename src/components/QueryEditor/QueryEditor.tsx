@@ -1,13 +1,14 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, Ref, useState } from 'react';
 import { isMac } from '../../utils/common';
 
 import './QueryEditor.css';
 
 interface QueryEditorProps {
     onRun: () => void;
+    inputRef?: Ref<HTMLTextAreaElement>;
 }
 
-export default function QueryEditor({ onRun }: QueryEditorProps) {
+export default function QueryEditor({ onRun, inputRef }: QueryEditorProps) {
     const [query, setQuery] = useState('');
 
     const runDisabled = !query || query.trim().length === 0;
@@ -26,12 +27,14 @@ export default function QueryEditor({ onRun }: QueryEditorProps) {
     return (
         <>
             <textarea
+                ref={inputRef}
                 rows={8}
                 className='query-editor-field'
                 placeholder={`SQL Query here... Press (${runHotKey}) to run`}
                 value={query}
                 onChange={handleQueryChange}
                 onKeyDown={handleKeyDown}
+                autoFocus
             />
             <div className='actions'>
                 <button
